@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Watchlist Saya - ANIMETRACK</title>
+  
+  <!-- Bootstrap 5 CSS -->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  
+  <style>
+    body {
+      background-color: #0c1322;
+      color: #f8fafc;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    
+    /* Navbar Custom Style */
+    .bg-custom-dark {
+      background-color: rgba(12, 19, 34, 0.95);
+      border-bottom: 1px solid #1e293b;
+    }
+
+    .brand-logo {
+      color: #f59e0b !important;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+    }
+
+    .nav-pills-custom .nav-link {
+      color: #94a3b8;
+      font-weight: 500;
+      border-radius: 8px;
+      padding: 6px 16px;
+      transition: all 0.2s;
+    }
+
+    .nav-pills-custom .nav-link:hover,
+    .nav-pills-custom .nav-link.active {
+      color: #ffffff !important;
+      background-color: #1e293b;
+    }
+
+    /* Table Container & Custom Dark Styling */
+    .table-card {
+      background-color: #131d31;
+      border: 1px solid #1e293b;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .custom-table {
+      margin-bottom: 0;
+      color: #cbd5e1;
+      border-color: #1e293b;
+    }
+
+    .custom-table thead th {
+      background-color: #131d31;
+      color: #94a3b8;
+      font-weight: 600;
+      font-size: 0.9rem;
+      border-bottom: 1px solid #1e293b;
+      padding: 16px 20px;
+    }
+
+    .custom-table tbody td {
+      background-color: transparent;
+      padding: 18px 20px;
+      vertical-align: middle;
+      border-bottom: 1px solid #1e293b;
+      font-size: 0.95rem;
+    }
+
+    .custom-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* JUDUL ANIME - PUTIH */
+    .anime-title {
+      font-weight: 700;
+      color: #ffffff !important;
+    }
+
+    /* PROGRESS EPISODE - PUTIH */
+    .custom-table tbody td:nth-child(3) {
+      color: #ffffff !important;
+    }
+
+    /* SCORE - PUTIH */
+    .custom-table tbody td:nth-child(4) {
+      color: #ffffff !important;
+    }
+
+    .star-score {
+      color: #ffffff;
+      letter-spacing: 2px;
+    }
+
+    /* Badges Status */
+    .badge-status-watching {
+      background-color: #0e3752;
+      color: #38bdf8;
+      font-weight: 600;
+      border-radius: 50rem;
+      padding: 6px 14px;
+      font-size: 0.8rem;
+    }
+
+    .badge-status-completed {
+      background-color: #0c392b;
+      color: #34d399;
+      font-weight: 600;
+      border-radius: 50rem;
+      padding: 6px 14px;
+      font-size: 0.8rem;
+    }
+
+    .badge-status-plan {
+      background-color: #272147;
+      color: #a78bfa;
+      font-weight: 600;
+      border-radius: 50rem;
+      padding: 6px 14px;
+      font-size: 0.8rem;
+    }
+
+@media (max-width: 767.98px) {
+  main.container {
+    margin-top: 30px !important;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  main h2 {
+    font-size: 1.25rem !important;
+    margin-bottom: 20px !important;
+  }
+
+  .table-card {
+    overflow-x: hidden;
+  }
+
+  .custom-table {
+    width: 100%;
+    table-layout: fixed;
+  }
+
+  .custom-table thead th {
+    padding: 12px 8px;
+    font-size: 0.75rem;
+  }
+
+  .custom-table tbody td {
+    padding: 14px 8px;
+    font-size: 0.75rem;
+    word-break: break-word;
+  }
+
+  /* Lebar setiap kolom */
+  .custom-table th:nth-child(1),
+  .custom-table td:nth-child(1) {
+    width: 27%;
+  }
+
+  .custom-table th:nth-child(2),
+  .custom-table td:nth-child(2) {
+    width: 27%;
+  }
+
+  .custom-table th:nth-child(3),
+  .custom-table td:nth-child(3) {
+    width: 23%;
+  }
+
+  .custom-table th:nth-child(4),
+  .custom-table td:nth-child(4) {
+    width: 23%;
+  }
+
+  /* Status */
+  .badge-status-watching,
+  .badge-status-completed,
+  .badge-status-plan {
+    display: inline-block;
+    padding: 5px 7px;
+    font-size: 0.65rem;
+    white-space: normal;
+    text-align: center;
+  }
+
+  /* Judul anime */
+  .anime-title {
+    font-size: 0.78rem;
+    line-height: 1.3;
+  }
+
+  /* Bintang */
+  .star-score {
+    letter-spacing: 0;
+    font-size: 0.65rem;
+  }
+}
+
+  </style>
+</head>
+
+<body>
+
+  <!-- Navbar Bootstrap -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-custom-dark sticky-top py-3">
+    <div class="container" style="max-width: 1100px;">
+
+      <a class="navbar-brand brand-logo fs-4" href="index.html">
+        ANIMETRACK
+      </a>
+      
+      <button
+        class="navbar-toggler border-0"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarContent"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div
+        class="collapse navbar-collapse justify-content-end"
+        id="navbarContent"
+      >
+        <ul class="navbar-nav nav-pills-custom gap-2">
+
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">
+              Eksplorasi
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link active" href="watchlist.html">
+              Watchlist
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="favorite.html">
+              Favorit
+            </a>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- Konten Utama -->
+  <main class="container my-5" style="max-width: 1100px;">
+
+    <h2 class="fw-bold fs-4 mb-4 text-white">
+      Koleksi Tontonan Saya
+    </h2>
+
+    <div class="table-card table-responsive">
+
+      <table class="table custom-table align-middle">
+
+        <thead>
+          <tr>
+            <th scope="col" style="width: 35%;">Judul</th>
+            <th scope="col" style="width: 25%;">Status</th>
+            <th scope="col" style="width: 20%;">Progress Episode</th>
+            <th scope="col" style="width: 20%;">Skor Pribadi</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          <tr>
+            <td class="anime-title">Naruto</td>
+            <td>
+              <span class="badge badge-status-watching">
+                Sedang Menonton
+              </span>
+            </td>
+            <td>Ep 100 / 220</td>
+            <td>
+              <span class="star-score">★★★★★</span> (10/10)
+            </td>
+          </tr>
+
+          <tr>
+            <td class="anime-title">Bleach</td>
+            <td>
+              <span class="badge badge-status-completed">
+                Selesai
+              </span>
+            </td>
+            <td>Ep 366 / 366</td>
+            <td>
+              <span class="star-score">★★★★★</span> (10/10)
+            </td>
+          </tr>
+
+          <tr>
+            <td class="anime-title">Dragonball</td>
+            <td>
+              <span class="badge badge-status-completed">
+                Selesai
+              </span>
+            </td>
+            <td>Ep 153 / 153</td>
+            <td>
+              <span class="star-score">★★★★☆</span> (8/10)
+            </td>
+          </tr>
+
+          <tr>
+            <td class="anime-title">Vinland Saga</td>
+            <td>
+              <span class="badge badge-status-completed">
+                Selesai
+              </span>
+            </td>
+            <td>Ep 24 / 24</td>
+            <td>
+              <span class="star-score">★★★★★</span> (9/10)
+            </td>
+          </tr>
+
+          <tr>
+            <td class="anime-title">Attack on Titan</td>
+            <td>
+              <span class="badge badge-status-completed">
+                Selesai
+              </span>
+            </td>
+            <td>Ep 25 / 25</td>
+            <td>
+              <span class="star-score">★★★★★</span> (9/10)
+            </td>
+          </tr>
+
+          <tr>
+            <td class="anime-title">Another</td>
+            <td>
+              <span class="badge badge-status-plan">
+                Rencana Tonton
+              </span>
+            </td>
+            <td>Ep 0 / 12</td>
+            <td>-</td>
+          </tr>
+
+          <tr>
+            <td class="anime-title">Hunter x Hunter</td>
+            <td>
+              <span class="badge badge-status-completed">
+                Selesai
+              </span>
+            </td>
+            <td>Ep 148 / 148</td>
+            <td>
+              <span class="star-score">★★★★★</span> (9/10)
+            </td>
+          </tr>
+
+          <tr>
+            <td class="anime-title">
+              Code Geass: Lelouch of the Rebellion
+            </td>
+            <td>
+              <span class="badge badge-status-completed">
+                Selesai
+              </span>
+            </td>
+            <td>Ep 24 / 24</td>
+            <td>
+              <span class="star-score">★★★★★</span> (10/10)
+            </td>
+          </tr>
+
+          <tr>
+            <td class="anime-title">
+              Mushoku Tensei: Jobless Reincarnation
+            </td>
+            <td>
+              <span class="badge badge-status-plan">
+                Rencana Tonton
+              </span>
+            </td>
+            <td>Ep 0 / 11</td>
+            <td>-</td>
+          </tr>
+
+          <tr>
+            <td class="anime-title">
+              Fullmetal Alchemist: Brotherhood
+            </td>
+            <td>
+              <span class="badge badge-status-completed">
+                Selesai
+              </span>
+            </td>
+            <td>Ep 64 / 64</td>
+            <td>
+              <span class="star-score">★★★★★</span> (10/10)
+            </td>
+          </tr>
+
+          <tr>
+            <td class="anime-title">Steins;Gate</td>
+            <td>
+              <span class="badge badge-status-completed">
+                Selesai
+              </span>
+            </td>
+            <td>Ep 24 / 24</td>
+            <td>
+              <span class="star-score">★★★★★</span> (10/10)
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+
+  <!-- Bootstrap 5 JS -->
+  <script src="js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

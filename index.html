@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Watchlist Tracker - Eksplorasi</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      background-color: #0c1322;
+      color: #f8fafc;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    .bg-custom-dark {
+      background-color: rgba(12, 19, 34, 0.95);
+      border-bottom: 1px solid #1e293b;
+    }
+
+    .brand-logo {
+      color: #f59e0b !important;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+    }
+
+    .nav-pills-custom .nav-link {
+      color: #94a3b8;
+      font-weight: 500;
+      border-radius: 8px;
+      padding: 6px 16px;
+      transition: all 0.2s;
+    }
+
+    .nav-pills-custom .nav-link:hover,
+    .nav-pills-custom .nav-link.active {
+      color: #ffffff !important;
+      background-color: #1e293b;
+    }
+
+    /* ==============================
+       CARD
+    ============================== */
+
+    .card-anime {
+      background-color: #131d31;
+      border: 1px solid #1e293b;
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      /* Membuat semua card mengisi tinggi kolom */
+      height: 100%;
+      /* Isi card disusun vertikal */
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .card-anime:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Semua gambar dibuat sama ukuran */
+    .card-anime .card-img-top {
+      width: 100%;
+      height: 310px;
+      object-fit: cover;
+      display: block;
+      background-color: #1e293b;
+      flex-shrink: 0;
+    }
+
+    /* Bagian isi card */
+    .card-anime .card-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 16px;
+    }
+
+    /* Tombol favorit */
+    .badge-fav-floating {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
+      color: #cbd5e1;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      font-size: 18px;
+      z-index: 2;
+    }
+
+    .rating-meta {
+      font-size: 0.8rem;
+      color: #f59e0b;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .category-meta {
+      font-size: 0.75rem;
+      color: #f59e0b;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-right: 8px;
+    }
+
+    /* ==============================
+       JUDUL ANIME
+    ============================== */
+
+    .anime-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #f8fafc;
+      margin-top: 4px;
+      margin-bottom: 6px;
+      line-height: 1.35;
+      /* Semua judul menyediakan ruang 2 baris */
+      min-height: 2.7em;
+      /* Maksimal 2 baris */
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .anime-sub {
+      font-size: 0.8rem;
+      color: #94a3b8;
+      margin-bottom: 0;
+    }
+
+    /* ==============================
+       RESPONSIVE
+    ============================== */
+
+    @media (max-width: 575.98px) {
+      .card-anime .card-img-top {
+        height: 360px;
+      }
+    }
+
+    @media (min-width: 576px) and (max-width: 767.98px) {
+      .card-anime .card-img-top {
+        height: 320px;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .card-anime .card-img-top {
+        height: 310px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ==============================
+       NAVBAR BERSIH (NORMAL SPACES)
+  ============================== -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-custom-dark sticky-top py-3">
+    <div class="container" style="max-width: 1100px;">
+      <a class="navbar-brand brand-logo fs-4" href="index.html">ANIMETRACK</a>
+      
+      <!-- Tombol Hamburger -->
+      <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Menu Dropdown -->
+      <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
+        <ul class="navbar-nav nav-pills-custom gap-2 pt-3 pt-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" href="index.html">Eksplorasi</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="watchlist.html">Watchlist</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="favorite.html">Favorit</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ==============================
+       KONTEN UTAMA
+  ============================== -->
+
+  <main class="container my-5" style="max-width: 1100px;">
+    <h2 class="fw-bold fs-4 mb-4 text-white">Sedang Hangat & Populer</h2>
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
+
+      <!-- 1. OSHI NO KO -->
+      <div class="col">
+        <div class="card card-anime">
+          <span class="badge-fav-floating">♥</span>
+          <img src="https://i.pinimg.com/736x/aa/77/c6/aa77c66dd9384df19418d5dedf07f4fb.jpg" class="card-img-top" alt="Oshi no Ko">
+          <div class="card-body">
+            <div>
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="category-meta">Award Winning / Drama</span>
+                <span class="rating-meta">★ 8.52</span>
+              </div>
+              <h3 class="anime-title">[Oshi no Ko]</h3>
+            </div>
+            <p class="anime-sub">11 Episode • Spring 2023</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. ANOTHER -->
+      <div class="col">
+        <div class="card card-anime">
+          <span class="badge-fav-floating">♥</span>
+          <img src="https://i.pinimg.com/1200x/be/28/8d/be288d036d93e00086b3f38eedee2e8c.jpg" class="card-img-top" alt="Another">
+          <div class="card-body">
+            <div>
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="category-meta">Horror / Mystery</span>
+                <span class="rating-meta">★ 7.46</span>
+              </div>
+              <h3 class="anime-title">Another</h3>
+            </div>
+            <p class="anime-sub">12 Episode • Winter 2012</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. ATTACK ON TITAN -->
+      <div class="col">
+        <div class="card card-anime">
+          <span class="badge-fav-floating">♥</span>
+          <img src="https://i.pinimg.com/1200x/c9/09/17/c90917b30601fc190276231ed437443e.jpg" class="card-img-top" alt="Attack on Titan">
+          <div class="card-body">
+            <div>
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="category-meta">Action / Suspense</span>
+                <span class="rating-meta">★ 8.58</span>
+              </div>
+              <h3 class="anime-title">Attack on Titan</h3>
+            </div>
+            <p class="anime-sub">25 Episode • Spring 2013</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. BLEACH -->
+      <div class="col">
+        <div class="card card-anime">
+          <span class="badge-fav-floating">♥</span>
+          <img src="https://i.pinimg.com/736x/a4/ab/91/a4ab910abacbc21761ae5658cbaa50c5.jpg" class="card-img-top" alt="Bleach">
+          <div class="card-body">
+            <div>
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="category-meta">Action / Adventure</span>
+                <span class="rating-meta">★ 8.00</span>
+              </div>
+              <h3 class="anime-title">Bleach</h3>
+            </div>
+            <p class="anime-sub">366 Episode • Fall 2004</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. CODE GEASS -->
+      <div class="col">
+        <div class="card card-anime">
+          <span class="badge-fav-floating">♥</span>
+          <img src="https://i.pinimg.com/736x/56/cb/31/56cb31e518b64ea71a60ab7f1210f60e.jpg" class="card-img-top" alt="Code Geass: Lelouch of the Rebellion">
+          <div class="card-body">
+            <div>
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="category-meta">Drama / Mecha</span>
+                <span class="rating-meta">★ 8.71</span>
+              </div>
+              <h3 class="anime-title">Code Geass: Lelouch of the Rebellion</h3>
+            </div>
+            <p class="anime-sub">25 Episode • Fall 2006</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. DANDADAN -->
+      <div class="col">
+        <div class="card card-anime">
+          <span class="badge-fav-floating">♥</span>
+          <img src="https://i.pinimg.com/736x/06/a6/24/06a62478132be7ed557ae27b14ae2fba.jpg" class="card-img-top" alt="Dandadan">
+          <div class="card-body">
+            <div>
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="category-meta">Action / Supernatural</span>
+                <span class="rating-meta">★ 8.39</span>
+              </div>
+              <h3 class="anime-title">Dandadan</h3>
+            </div>
+            <p class="anime-sub">12 Episode • Fall 2024</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. DARLING IN THE FRANXX -->
+      <div class="col">
+        <div class="card card-anime">
+          <span class="badge-fav-floating">♥</span>
+          <img src="https://i.pinimg.com/736x/b8/52/b8/b852b8404c5437735741cf02159118e3.jpg" class="card-img-top" alt="Darling in the FranXX">
+          <div class="card-body">
+            <div>
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="category-meta">Drama / Mecha</span>
+                <span class="rating-meta">★ 7.21</span>
+              </div>
+              <h3 class="anime-title">Darling in the FranXX</h3>
+            </div>
+            <p class="anime-sub">24 Episode • Winter 2018</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 8. DRAGON BALL -->
+      <div class="col">
+        <div class="card card-anime">
+          <span class="badge-fav-floating">♥</span>
+          <img src="https://i.pinimg.com/1200x/92/b3/95/92b395bf405dcec2c942de65a085e041.jpg" class="card-img-top" alt="Dragon Ball">
+          <div class="card-body">
+            <div>
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="category-meta">Action / Adventure</span>
+                <span class="rating-meta">★ 7.98</span>
+              </div>
+              <h3 class="anime-title">Dragon Ball</h3>
+            </div>
+            <p class="anime-sub">153 Episode • Winter 1986</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 9. FRIEREN -->
+      <div class="col">
+        <div class="card card-anime">
+          <span class="badge-fav-floating">♥</span>
+          <img src="https://i.pinimg.com/736x/ae/b8/1e/aeb81e901a22cd9b814671e1a4007c79.jpg" class="card-img-top" alt="Frieren">
+          <div class="card-body">
+            <div>
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="category-meta">Adventure / Fantasy</span>
+                <span class="rating-meta">★ 9.25</span>
+              </div>
+              <h3 class="anime-title">Frieren: Beyond Journey's End</h3>
+            </div>
+            <p class="anime-sub">28 Episode • Fall 2023</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 10. FULLMETAL ALCHEMIST -->
+      <div class="col">
+        <div class="card card-anime">
+          <span class="badge-fav-floating">♥</span>
+          <img src="https://i.pinimg.com/1200x/3c/e4/5f/3ce45fd76df1d0a9b7b001cceb9e6c92.jpg" class="card-img-top" alt="Fullmetal Alchemist">
+          <div class="card-body">
+            <div>
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="category-meta">Action / Adventure</span>
+                <span class="rating-meta">★ 9.11</span>
+              </div>
+              <h3 class="anime-title">Fullmetal Alchemist</h3>
+            </div>
+            <p class="anime-sub">64 Episode • Spring 2009</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 11. GINTAMA -->
+      <div class="col">
+        <div class="card card-anime">
+          <span class="badge-fav-floating">♥</span>
+          <img src="https://i.pinimg.com/1200x/6c/6e/a9/6c6ea9de2cdd9e11488a8279fb45b792.jpg" class="card-img-top" alt="Gintama">
+          <div class="card-body">
+            <div>
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="category-meta">Action / Comedy</span>
+                <span class="rating-meta">★ 8.93</span>
+              </div>
+              <h3 class="anime-title">Gintama</h3>
+            </div>
+            <p class="anime-sub">201 Episode • Spring 2006</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 12. HUNTER X HUNTER -->
+      <div class="col">
+        <div class="card card-anime">
+          <span class="badge-fav-floating">♥</span>
+          <img src="https://i.pinimg.com/736x/c8/fc/d4/c8fcd46fd43e340af7e74c7443515e2c.jpg" class="card-img-top" alt="Hunter x Hunter">
+          <div class="card-body">
+            <div>
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="category-meta">Action / Adventure</span>
+                <span class="rating-meta">★ 9.03</span>
+              </div>
+              <h3 class="anime-title">Hunter x Hunter</h3>
+            </div>
+            <p class="anime-sub">148 Episode • Fall 2011</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 13. MARCH COMES IN LIKE A LION -->
+      <div class="col">
+        <div class="card card-anime">
+          <span class="badge-fav-floating">♥</span>
+          <img src="https://i.pinimg.com/736x/48/2d/38/482d38b4f2131005b533d2ee5f79e6d3.jpg" class="card-img-top" alt="March Comes in Like a Lion">
+          <div class="card-body">
+            <div>
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="category-meta">Drama / Sports</span>
+                <span class="rating-meta">★ 8.37</span>
+              </div>
+              <h3 class="anime-title">March Comes in Like a Lion</h3>
+            </div>
+            <p class="anime-sub">24 Episode • Fall 2016</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 14. MUSHOKU TENSEI -->
+      <div class="col">
+        <div class="card card-anime">
+          <span class="badge-fav-floating">♥</span>
+          <img src="https://i.pinimg.com/736x/00/19/a9/0019a9784160259e87c54f0774e22974.jpg" class="card-img-top" alt="Mushoku Tensei">
+          <div class="card-body">
+            <div>
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="category-meta">Adventure / Fantasy</span>
+                <span class="rating-meta">★ 8.31</span>
+              </div>
+              <h3 class="anime-title">Mushoku Tensei: Jobless Reincarnation</h3>
+            </div>
+            <p class="anime-sub">11 Episode • Winter 2021</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 15. NARUTO -->
+      <div class="col">
+        <div class="card card-anime">
+          <span class="badge-fav-floating">♥</span>
+          <img src="https://i.pinimg.com/736x/43/d6/7b/43d67b0ac2bed4de021646eb3ead2028.jpg" class="card-img-top" alt="Naruto">
+          <div class="card-body">
+            <div>
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="category-meta">Action / Adventure</span>
+                <span class="rating-meta">★ 8.02</span>
+              </div>
+              <h3 class="anime-title">Naruto</h3>
+            </div>
+            <p class="anime-sub">220 Episode • Fall 2002</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 16. RE ZERO -->
+      <div class="col">
+        <div class="card card-anime">
+          <span class="badge-fav-floating">♥</span>
+          <img src="https://i.pinimg.com/736x/9c/00/8a/9c008a2fa5d15280a18b0bf271efa182.jpg" class="card-img-top" alt="Re:Zero">
+          <div class="card-body">
+            <div>
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="category-meta">Drama / Fantasy</span>
+                <span class="rating-meta">★ 8.25</span>
+              </div>
+              <h3 class="anime-title">Re:Zero -Starting Life in Another World-</h3>
+            </div>
+            <p class="anime-sub">24 Episode • Spring 2016</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 17. STEINS GATE -->
+      <div class="col">
+        <div class="card card-anime">
+          <span class="badge-fav-floating">♥</span>
+          <img src="https://i.pinimg.com/736x/3e/d0/84/3ed0849928323ed387555b4b8f4c7301.jpg" class="card-img-top" alt="Steins;Gate">
+          <div class="card-body">
+            <div>
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="category-meta">Drama / Sci-Fi</span>
+                <span class="rating-meta">★ 9.07</span>
+              </div>
+              <h3 class="anime-title">Steins;Gate</h3>
+            </div>
+            <p class="anime-sub">24 Episode • Spring 2011</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 18. SWORD ART ONLINE -->
+      <div class="col">
+        <div class="card card-anime">
+          <span class="badge-fav-floating">♥</span>
+          <img src="https://i.pinimg.com/1200x/c6/d7/b8/c6d7b84d4582a1d3e6dd4be9d12de5ee.jpg" class="card-img-top" alt="Sword Art Online">
+          <div class="card-body">
+            <div>
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="category-meta">Action / Fantasy</span>
+                <span class="rating-meta">★ 7.23</span>
+              </div>
+              <h3 class="anime-title">Sword Art Online</h3>
+            </div>
+            <p class="anime-sub">24 Episode • Summer 2012</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 19. THE FRAGRANT FLOWER -->
+      <div class="col">
+        <div class="card card-anime">
+          <span class="badge-fav-floating">♥</span>
+          <img src="https://i.pinimg.com/736x/14/5d/aa/145daaad63b29b5d62d098ceecbc3e0e.jpg" class="card-img-top" alt="The Fragrant Flower Blooms With Dignity">
+          <div class="card-body">
+            <div>
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="category-meta">Drama / Romance</span>
+                <span class="rating-meta">★ 8.47</span>
+              </div>
+              <h3 class="anime-title">The Fragrant Flower Blooms With Dignity</h3>
+            </div>
+            <p class="anime-sub">12 Episode • Summer 2025</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 20. VINLAND SAGA -->
+      <div class="col">
+        <div class="card card-anime">
+          <span class="badge-fav-floating">♥</span>
+          <img src="https://i.pinimg.com/736x/15/fa/c7/15fac7573576bc7579f95f52d6b31401.jpg" class="card-img-top" alt="Vinland Saga">
+          <div class="card-body">
+            <div>
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="category-meta">Action / Adventure</span>
+                <span class="rating-meta">★ 8.78</span>
+              </div>
+              <h3 class="anime-title">Vinland Saga</h3>
+            </div>
+            <p class="anime-sub">24 Episode • Summer 2019</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Bootstrap 5 JS -->
+  <script src="js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
